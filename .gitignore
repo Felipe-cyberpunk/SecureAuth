@@ -1,0 +1,14 @@
+# Entornos virutales 
+venv/
+.venv/
+
+# Cache de Python
+
+__pycache__//
+
+# Variables de entorno y credenciales
+
+.env
+
+# Archivos del sistema operativo Mac
+.DS_Store
