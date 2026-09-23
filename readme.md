@@ -61,7 +61,7 @@ SecureAuth/
 ⚙️ Guía de Instalación / Installation Guide
 Bash
 # 1. Clonar el repositorio / Clone repository
-git clone https://github.com/tu-usuario/SecureAuth.git
+git clone (https://github.com/Felipe-cyberpunk/SecureAuth/tree/main)
 cd SecureAuth
 
 # 2. Crear y activar entorno virtual / Create & activate virtual environment
