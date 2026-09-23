@@ -1,14 +1,33 @@
-# Entornos virutales 
-venv/
-.venv/
-
-# Cache de Python
-
-__pycache__//
-
-# Variables de entorno y credenciales
-
+# ==========================================
+# SECRETOS Y CREDENCIALES (CRÍTICO)
+# ==========================================
 .env
 
-# Archivos del sistema operativo Mac
+# ==========================================
+# ENTORNO VIRTUAL DE PYTHON
+# ==========================================
+venv/
+.venv/
+env/
+
+# ==========================================
+# ARCHIVOS CACHÉ DE PYTHON
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+
+# ==========================================
+# IDEs Y CONFIGURACIONES LOCALES
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==========================================
+# ARCHIVOS DEL SISTEMA OPERATIVO
+# ==========================================
 .DS_Store
+Thumbs.db

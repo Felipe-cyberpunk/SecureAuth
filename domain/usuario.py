@@ -23,7 +23,7 @@ class usuario:
         return self.__edad
         
     @edad.setter
-    def edad(self, nueva_edad) -> int:
+    def edad(self, nueva_edad: int):
         if nueva_edad < 18:
             raise ValueError("El usuario debe ser mayor de 18 años")
         self.__edad = nueva_edad
@@ -32,6 +32,6 @@ class usuario:
     def __str__(self):
         return f"Usuario: {self.__username}, Email: {self.__email}, Edad: {self.__edad}"
     
-    def repr(self) -> str:    
+    def __repr__(self) -> str:    
         return f"Usuario: {self.__username}, Email: {self.__email}, Edad: {self.__edad}"
          

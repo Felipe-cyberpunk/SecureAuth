@@ -8,7 +8,7 @@ def get_connection():
         "SERVER=localhost,1433;"
         "DATABASE=SecureAuthDB;"
         "UID=sTu_usuario;"
-        "PWD=Tu_contraseña"
+        "PWD=Tu_contraseña;"
         "TrustServerCertificate=yes;"
     )
     return pyodbc.connect(connection_string, timeout=30)
@@ -27,3 +27,10 @@ engine = create_engine(
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

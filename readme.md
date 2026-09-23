@@ -1,81 +1,84 @@
-# 🛡️ SecureAuth Backend
+🛡️ SecureAuth Backend
+(Versión en Español / Spanish Version)
 
-SecureAuth es una API backend desarrollada bajo una arquitectura limpia (Clean Architecture / Domain-Driven Design), construida con **FastAPI**, **SQLAlchemy** y **SQL Server**, utilizando contenedores Docker. El proyecto implementa rigurosas prácticas de seguridad, incluyendo hashing de contraseñas con bcrypt y validación estricta de datos de entrada.
+SecureAuth es una API backend de grado empresarial desarrollada bajo un enfoque de arquitectura limpia y Domain-Driven Design (DDD). Construida con FastAPI, SQLAlchemy y SQL Server (en contenedores Docker), está diseñada para ofrecer altos estándares de seguridad, trazabilidad forense y control de acceso robusto en entornos B2B.
 
----
+🚀 Características Principales y Seguridad Enterprise
+Autenticación Basada en Cookies Seguras: Empleo de cookies HttpOnly, Secure y SameSite=lax para mitigar ataques XSS.
 
-## 🚀 Características Principales
+Gestión de Sesión Única (jti): Control estricto de tokens mediante identificadores únicos validados en base de datos.
 
-- **Arquitectura por Capas:** Separación modular entre Dominio (`domain/`), Infraestructura (`infrastructure/`) y Esquemas de Validación (`schema/`).
-- **Seguridad Robusta:** Cifrado de contraseñas mediante `passlib` y el algoritmo `bcrypt`.
-- **Validación de Datos:** Uso de **Pydantic** para garantizar tipos de datos estrictos y validación automática de correos electrónicos (`EmailStr`).
-- **Persistencia Empresarial:** Conexión nativa con **SQL Server** corriendo en un contenedor Docker a través de `pyodbc` y SQLAlchemy.
-- **Documentación Interactiva:** Endpoints documentados automáticamente mediante Swagger UI y ReDoc (gracias a FastAPI).
+Control de Acceso Basado en Roles (RBAC): Endpoints administrativos protegidos (/admin/*) con validación de privilegios.
 
----
+Protección Anti-Fuerza Bruta: Limitación de tasa de peticiones (slowapi) en rutas críticas de autenticación (5 req/min).
 
-## 🛠️ Tecnologías Utilizadas
+Auditoría Forense: Registro automático en base de datos (AuditLogModel) capturando acciones y la IP de origen del cliente.
 
-- **Python 3.11+**
-- **FastAPI** (Framework web asíncrono de alto rendimiento)
-- **SQLAlchemy** (ORM para mapeo objeto-relacional)
-- **SQL Server & Docker** (Base de datos relacional en contenedores)
-- **Pydantic** (Validación de datos y esquemas)
-- **Passlib & Bcrypt** (Seguridad y hashing de credenciales)
+Manejo Global de Excepciones: Controladores centralizados para errores de base de datos (pyodbc) y del servidor.
 
----
+🛡️ SecureAuth Backend
+(English Version)
 
-## 📂 Estructura del Proyecto
+SecureAuth is an enterprise-grade backend API built under a Clean Architecture and Domain-Driven Design (DDD) approach. Powered by FastAPI, SQLAlchemy, and SQL Server (via Docker containers), it is engineered to deliver high security standards, forensic traceability, and robust access control for B2B environments.
 
-```text
+🚀 Key Features & Enterprise Security
+Secure Cookie-Based Authentication: Utilization of HttpOnly, Secure, and SameSite=lax cookies to mitigate XSS attacks.
+
+Single-Session Management (jti): Strict token control via unique session identifiers validated against the database.
+
+Role-Based Access Control (RBAC): Protected administrative endpoints (/admin/*) with strict privilege validation.
+
+Brute-Force Protection: Rate limiting (slowapi) integrated into critical authentication routes (5 req/min).
+
+Forensic Auditing: Automated database logging (AuditLogModel) capturing critical user actions and client IP addresses.
+
+Global Exception Handling: Centralized handlers for database connection drops (pyodbc) and internal server errors.
+
+🛠️ Stack Tecnológico / Technology Stack
+Python 3.11+
+
+FastAPI (High-performance async web framework)
+
+SQLAlchemy & pyodbc (ORM and native connector for MS SQL Server with READ COMMITTED isolation)
+
+Docker & SQL Server (Persistent relational database infrastructure)
+
+Pydantic & Passlib (Bcrypt) (Schema validation and secure credential hashing)
+
+SlowAPI & Python-Jose (Rate limiting and encrypted JWT management)
+
+📂 Estructura del Proyecto / Project Structure
+Plaintext
 SecureAuth/
 │
-├── domain/               # Entidades y lógica de negocio
-│   └── __init__.py
-│
-├── infrastructure/       # Capa de datos y seguridad
-│   ├── __init__.py
-│   ├── database.py       # Configuración del motor y sesión SQLAlchemy
-│   ├── models.py         # Modelos de base de datos (SQL Server)
-│   └── security.py       # Funciones de hashing y verificación de contraseñas
-│
-├── schema/               # Modelos Pydantic para validación de entrada/salida
-│   └── usuario_schema.py
-│
-├── .env                  # Variables de entorno y credenciales (Oculto)
-├── main.py               # Punto de entrada de la API (FastAPI)
+├── domain/               # Entidades de dominio y lógica de negocio orientada a objetos
+├── infrastructure/       # Capa de datos, persistencia, modelos y seguridad (JWT, JTI, Auditoría)
+├── schema/               # Esquemas Pydantic para validación y tipado de entrada/salida
+├── .env                  # Variables de entorno y secretos del sistema (Oculto)
+├── main.py               # Enrutamiento principal, middleware de seguridad y manejo de errores
 ├── requirements.txt      # Dependencias del proyecto
 └── README.md             # Documentación del proyecto
-
-⚙️ Guía de Instalación y Ejecución Local
-Sigue estos pasos para clonar y levantar el proyecto en tu máquina:
-
-1. Clonar el repositorio
+⚙️ Guía de Instalación / Installation Guide
 Bash
-git clone [https://github.com/tu-usuario/SecureAuth.git](https://github.com/tu-usuario/SecureAuth.git)
+# 1. Clonar el repositorio / Clone repository
+git clone https://github.com/tu-usuario/SecureAuth.git
 cd SecureAuth
-2. Crear y activar el entorno virtual
-Bash
+
+# 2. Crear y activar entorno virtual / Create & activate virtual environment
 python -m venv venv
+# Linux/macOS: source venv/bin/activate
+# Windows: venv\Scripts\activate
 
-# En macOS / Linux:
-source venv/bin/activate
-
-# En Windows:
-# venv\Scripts\activate
-3. Instalar las dependencias
-Bash
+# 3. Instalar dependencias / Install dependencies
 pip install -r requirements.txt
-4. Configurar las variables de entorno
-Crea un archivo llamado .env en la raíz del proyecto y define la cadena de conexión para tu instancia de SQL Server:
 
-Fragmento de código
-DATABASE_URL=mssql+pyodbc://sa:TuPasswordSeguro123@localhost:1433/SecureAuthDB?driver=ODBC+Driver+17+for+SQL+Server&TrustServerCertificate=yes
-▶️ Ejecución del Servidor
-Inicia la aplicación en modo de desarrollo con Uvicorn:
-
+# 4. Configurar variables de entorno (.env) / Set up environment variables
+SECRET_KEY=tu_clave_secreta_extremadamente_larga_y_segura
+▶️ Ejecución / Execution
 Bash
 uvicorn main:app --reload
-La API estará corriendo en: http://127.0.0.1:8000
+API Endpoint: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-Documentación interactiva (Swagger UI): http://127.0.0.1:8000/docs
+Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
